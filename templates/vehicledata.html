@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Insurance Prediction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <p class="eyebrow">Underwriting Model</p>
+        <h1>Vehicle Insurance Prediction</h1>
+        <p class="subhead">Fill in the details below to estimate whether this customer will respond to a vehicle insurance offer.</p>
+
+        <form method="post" action="/">
+
+            <div class="section">
+                <p class="section-title">Customer</p>
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="Gender">Gender</label>
+                        <select id="Gender" name="Gender" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">Male</option>
+                            <option value="0">Female</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="Age">Age</label>
+                        <input type="number" id="Age" name="Age" placeholder="e.g. 34" min="0" required>
+                    </div>
+                    <div class="field">
+                        <label for="Driving_License">Driving license</label>
+                        <select id="Driving_License" name="Driving_License" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="Region_Code">Region code</label>
+                        <input type="number" step="0.01" id="Region_Code" name="Region_Code" placeholder="e.g. 28" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <p class="section-title">Vehicle</p>
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="Vehicle_Age_lt_1_Year">Vehicle age &lt; 1 year</label>
+                        <select id="Vehicle_Age_lt_1_Year" name="Vehicle_Age_lt_1_Year" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="Vehicle_Age_gt_2_Years">Vehicle age &gt; 2 years</label>
+                        <select id="Vehicle_Age_gt_2_Years" name="Vehicle_Age_gt_2_Years" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="field full">
+                        <label for="Vehicle_Damage_Yes">Prior vehicle damage</label>
+                        <select id="Vehicle_Damage_Yes" name="Vehicle_Damage_Yes" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <p class="section-title">Policy</p>
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="Previously_Insured">Previously insured</label>
+                        <select id="Previously_Insured" name="Previously_Insured" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="Annual_Premium">Annual premium</label>
+                        <input type="number" step="0.01" id="Annual_Premium" name="Annual_Premium" placeholder="e.g. 32500" required>
+                    </div>
+                    <div class="field">
+                        <label for="Policy_Sales_Channel">Sales channel code</label>
+                        <input type="number" step="0.01" id="Policy_Sales_Channel" name="Policy_Sales_Channel" placeholder="e.g. 26" required>
+                    </div>
+                    <div class="field">
+                        <label for="Vintage">Vintage (days as customer)</label>
+                        <input type="number" id="Vintage" name="Vintage" placeholder="e.g. 154" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary">Run prediction</button>
+        </form>
+
+        <form method="get" action="/train">
+            <button type="submit" class="train-button">Train model</button>
+        </form>
+
+        {% if context and context != "Rendering" %}
+        <div class="result {{ 'yes' if 'Yes' in context else 'no' }}">
+            <div class="result-icon">{{ '✓' if 'Yes' in context else '–' }}</div>
+            <div class="result-text">
+                <div class="result-label">Prediction result</div>
+                <div class="result-value">{{ context }}</div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
