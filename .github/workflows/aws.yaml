@@ -56,6 +56,10 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      -  name: Stop old container
+         run: docker rm -f $(docker ps -aq) || true
+
+        
       - name: Run Docker Image to serve users
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
